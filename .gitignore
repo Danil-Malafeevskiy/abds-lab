@@ -85,6 +85,12 @@ __pycache__/
 venv/
 env/
 .venv/
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+data/
+volume/
 
 # Node.js
 node_modules/

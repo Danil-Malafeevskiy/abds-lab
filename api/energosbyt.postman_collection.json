@@ -1,0 +1,684 @@
+{
+  "info": {
+    "name": "ЭнергоСбыт API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "HTTP API сервиса «ЭнергоСбыт»."
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8080"
+    },
+    {
+      "key": "user_id",
+      "value": "1"
+    },
+    {
+      "key": "realty_id",
+      "value": "1"
+    },
+    {
+      "key": "gauge_id",
+      "value": "1001"
+    },
+    {
+      "key": "new_gauge_id",
+      "value": "2"
+    },
+    {
+      "key": "tariff_id",
+      "value": "1"
+    }
+  ],
+  "item": [
+    {
+      "name": "Проверка доступности",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{base_url}}/ping"
+      },
+      "response": [
+        {
+          "name": "200 OK",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base_url}}/ping"
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Length",
+              "value": "0"
+            }
+          ],
+          "body": ""
+        }
+      ]
+    },
+    {
+      "name": "Собственник",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{base_url}}/users/{{user_id}}"
+      },
+      "response": [
+        {
+          "name": "200 OK",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base_url}}/users/{{user_id}}"
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"id\": 1,\n  \"fio\": \"Иванов Иван Собственникович 1\",\n  \"phone\": \"+79000000001\",\n  \"phone_prev\": \"\"\n}"
+        },
+        {
+          "name": "404 Not Found",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base_url}}/users/{{user_id}}"
+          },
+          "status": "Not Found",
+          "code": 404,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"message\": \"Not found\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "Изменение ФИО и телефона",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/users/{{user_id}}",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"fio\": \"Петрова Анна Сергеевна\",\n  \"phone\": \"+79111111111\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [
+        {
+          "name": "204 No Content",
+          "originalRequest": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/users/{{user_id}}",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fio\": \"Петрова Анна Сергеевна\",\n  \"phone\": \"+79111111111\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "No Content",
+          "code": 204,
+          "header": [
+            {
+              "key": "Content-Length",
+              "value": "0"
+            }
+          ],
+          "body": ""
+        },
+        {
+          "name": "404 Not Found",
+          "originalRequest": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/users/{{user_id}}",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fio\": \"Петрова Анна Сергеевна\",\n  \"phone\": \"+79111111111\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Not Found",
+          "code": 404,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"message\": \"Not found\"\n}"
+        },
+        {
+          "name": "400 Bad Request",
+          "originalRequest": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/users/{{user_id}}",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fio\": \"Петрова Анна Сергеевна\",\n  \"phone\": \"+79111111111\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Bad Request",
+          "code": 400,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"message\": \"invalid \\\"fio\\\" field\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "Объект недвижимости",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{base_url}}/realty/{{realty_id}}"
+      },
+      "response": [
+        {
+          "name": "200 OK",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base_url}}/realty/{{realty_id}}"
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"id\": 1,\n  \"address\": \"г. Москва, ул. Энергетиков, д. 1\",\n  \"square\": 87,\n  \"type\": \"flat\",\n  \"number\": \"1\",\n  \"rooms\": 3,\n  \"floor\": 1,\n  \"porch\": 1\n}"
+        },
+        {
+          "name": "404 Not Found",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base_url}}/realty/{{realty_id}}"
+          },
+          "status": "Not Found",
+          "code": 404,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"message\": \"Not found\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "Передача или корректировка показаний",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/realty/{{realty_id}}/readings",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"user_id\": {{user_id}},\n  \"gauge_id\": {{gauge_id}},\n  \"tariff_id\": {{tariff_id}},\n  \"reading_date\": \"2026-10-01\",\n  \"day_kw\": 1250,\n  \"night_kw\": 300\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [
+        {
+          "name": "201 Created",
+          "originalRequest": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/realty/{{realty_id}}/readings",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": {{user_id}},\n  \"gauge_id\": {{gauge_id}},\n  \"tariff_id\": {{tariff_id}},\n  \"reading_date\": \"2026-10-01\",\n  \"day_kw\": 1250,\n  \"night_kw\": 300\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Created",
+          "code": 201,
+          "header": [
+            {
+              "key": "Content-Length",
+              "value": "0"
+            }
+          ],
+          "body": ""
+        },
+        {
+          "name": "404 Not Found",
+          "originalRequest": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/realty/{{realty_id}}/readings",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": {{user_id}},\n  \"gauge_id\": {{gauge_id}},\n  \"tariff_id\": {{tariff_id}},\n  \"reading_date\": \"2026-10-01\",\n  \"day_kw\": 1250,\n  \"night_kw\": 300\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Not Found",
+          "code": 404,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"message\": \"Not found\"\n}"
+        },
+        {
+          "name": "400 Bad Request",
+          "originalRequest": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/realty/{{realty_id}}/readings",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": {{user_id}},\n  \"gauge_id\": {{gauge_id}},\n  \"tariff_id\": {{tariff_id}},\n  \"reading_date\": \"2026-10-01\",\n  \"day_kw\": 1250,\n  \"night_kw\": 300\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Bad Request",
+          "code": 400,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"message\": \"invalid \\\"day_kw\\\" field\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "Показания за период",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{base_url}}/realty/{{realty_id}}/readings?date_from=2026-10-01&date_to=2026-10-31"
+      },
+      "response": [
+        {
+          "name": "200 OK",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base_url}}/realty/{{realty_id}}/readings?date_from=2026-10-01&date_to=2026-10-31"
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"readings\": [\n    {\n      \"reading_date\": \"2026-10-01\",\n      \"user_id\": 1,\n      \"tariff_id\": 1,\n      \"gauge_id\": 1001,\n      \"day_kw\": 4600,\n      \"night_kw\": 1392\n    },\n    {\n      \"reading_date\": \"2026-10-02\",\n      \"user_id\": 1,\n      \"tariff_id\": 1,\n      \"gauge_id\": 1001,\n      \"day_kw\": 4612,\n      \"night_kw\": 1394\n    },\n    {\n      \"reading_date\": \"2026-10-03\",\n      \"user_id\": 1,\n      \"tariff_id\": 1,\n      \"gauge_id\": 1001,\n      \"day_kw\": 4620,\n      \"night_kw\": 1396\n    },\n    {\n      \"reading_date\": \"2026-10-04\",\n      \"user_id\": 1,\n      \"tariff_id\": 1,\n      \"gauge_id\": 1001,\n      \"day_kw\": 4629,\n      \"night_kw\": 1399\n    },\n    {\n      \"reading_date\": \"2026-10-05\",\n      \"user_id\": 1,\n      \"tariff_id\": 1,\n      \"gauge_id\": 1001,\n      \"day_kw\": 4640,\n      \"night_kw\": 1403\n    },\n    {\n      \"reading_date\": \"2026-10-06\",\n      \"user_id\": 1,\n      \"tariff_id\": 1,\n      \"gauge_id\": 1001,\n      \"day_kw\": 4651,\n      \"night_kw\": 1404\n    },\n    {\n      \"reading_date\": \"2026-10-07\",\n      \"user_id\": 1,\n      \"tariff_id\": 1,\n      \"gauge_id\": 1001,\n      \"day_kw\": 4656,\n      \"night_kw\": 1407\n    },\n    {\n      \"reading_date\": \"2026-10-08\",\n      \"user_id\": 1,\n      \"tariff_id\": 1,\n      \"gauge_id\": 1001,\n      \"day_kw\": 4662,\n      \"night_kw\": 1410\n    },\n    {\n      \"reading_date\": \"2026-10-09\",\n      \"user_id\": 1,\n      \"tariff_id\": 1,\n      \"gauge_id\": 1001,\n      \"day_kw\": 4676,\n      \"night_kw\": 1414\n    },\n    {\n      \"reading_date\": \"2026-10-10\",\n      \"user_id\": 1,\n      \"tariff_id\": 1,\n      \"gauge_id\": 1001,\n      \"day_kw\": 4682,\n      \"night_kw\": 1419\n    },\n    {\n      \"reading_date\": \"2026-10-11\",\n      \"user_id\": 1,\n      \"tariff_id\": 1,\n      \"gauge_id\": 1001,\n      \"day_kw\": 4687,\n      \"night_kw\": 1423\n    },\n    {\n      \"reading_date\": \"2026-10-12\",\n      \"user_id\": 1,\n      \"tariff_id\": 1,\n      \"gauge_id\": 1001,\n      \"day_kw\": 4700,\n      \"night_kw\": 1427\n    },\n    {\n      \"reading_date\": \"2026-10-13\",\n      \"user_id\": 1,\n      \"tariff_id\": 1,\n      \"gauge_id\": 1001,\n      \"day_kw\": 4707,\n      \"night_kw\": 1432\n    },\n    {\n      \"reading_date\": \"2026-10-14\",\n      \"user_id\": 1,\n      \"tariff_id\": 1,\n      \"gauge_id\": 1001,\n      \"day_kw\": 4720,\n      \"night_kw\": 1436\n    },\n    {\n      \"reading_date\": \"2026-10-15\",\n      \"user_id\": 1,\n      \"tariff_id\": 1,\n      \"gauge_id\": 1001,\n      \"day_kw\": 4733,\n      \"night_kw\": 1441\n    },\n    {\n      \"reading_date\": \"2026-10-16\",\n      \"user_id\": 1,\n      \"tariff_id\": 1,\n      \"gauge_id\": 1001,\n      \"day_kw\": 4745,\n      \"night_kw\": 1446\n    },\n    {\n      \"reading_date\": \"2026-10-17\",\n      \"user_id\": 1,\n      \"tariff_id\": 1,\n      \"gauge_id\": 1001,\n      \"day_kw\": 4752,\n      \"night_kw\": 1449\n    },\n    {\n      \"reading_date\": \"2026-10-18\",\n      \"user_id\": 1,\n      \"tariff_id\": 1,\n      \"gauge_id\": 1001,\n      \"day_kw\": 4761,\n      \"night_kw\": 1454\n    },\n    {\n      \"reading_date\": \"2026-10-19\",\n      \"user_id\": 1,\n      \"tariff_id\": 1,\n      \"gauge_id\": 1001,\n      \"day_kw\": 4770,\n      \"night_kw\": 1455\n    },\n    {\n      \"reading_date\": \"2026-10-20\",\n      \"user_id\": 1,\n      \"tariff_id\": 1,\n      \"gauge_id\": 1001,\n      \"day_kw\": 4778,\n      \"night_kw\": 1460\n    },\n    {\n      \"reading_date\": \"2026-10-21\",\n      \"user_id\": 1,\n      \"tariff_id\": 1,\n      \"gauge_id\": 1001,\n      \"day_kw\": 4788,\n      \"night_kw\": 1461\n    },\n    {\n      \"reading_date\": \"2026-10-22\",\n      \"user_id\": 1,\n      \"tariff_id\": 1,\n      \"gauge_id\": 1001,\n      \"day_kw\": 4801,\n      \"night_kw\": 1465\n    },\n    {\n      \"reading_date\": \"2026-10-23\",\n      \"user_id\": 1,\n      \"tariff_id\": 1,\n      \"gauge_id\": 1001,\n      \"day_kw\": 4815,\n      \"night_kw\": 1468\n    },\n    {\n      \"reading_date\": \"2026-10-24\",\n      \"user_id\": 1,\n      \"tariff_id\": 1,\n      \"gauge_id\": 1001,\n      \"day_kw\": 4826,\n      \"night_kw\": 1469\n    },\n    {\n      \"reading_date\": \"2026-10-25\",\n      \"user_id\": 1,\n      \"tariff_id\": 1,\n      \"gauge_id\": 1001,\n      \"day_kw\": 4834,\n      \"night_kw\": 1472\n    },\n    {\n      \"reading_date\": \"2026-10-26\",\n      \"user_id\": 1,\n      \"tariff_id\": 1,\n      \"gauge_id\": 1001,\n      \"day_kw\": 4843,\n      \"night_kw\": 1473\n    },\n    {\n      \"reading_date\": \"2026-10-27\",\n      \"user_id\": 1,\n      \"tariff_id\": 1,\n      \"gauge_id\": 1001,\n      \"day_kw\": 4856,\n      \"night_kw\": 1478\n    },\n    {\n      \"reading_date\": \"2026-10-28\",\n      \"user_id\": 1,\n      \"tariff_id\": 1,\n      \"gauge_id\": 1001,\n      \"day_kw\": 4864,\n      \"night_kw\": 1480\n    },\n    {\n      \"reading_date\": \"2026-10-29\",\n      \"user_id\": 1,\n      \"tariff_id\": 1,\n      \"gauge_id\": 1001,\n      \"day_kw\": 4870,\n      \"night_kw\": 1485\n    },\n    {\n      \"reading_date\": \"2026-10-30\",\n      \"user_id\": 1,\n      \"tariff_id\": 1,\n      \"gauge_id\": 1001,\n      \"day_kw\": 4878,\n      \"night_kw\": 1490\n    },\n    {\n      \"reading_date\": \"2026-10-31\",\n      \"user_id\": 1,\n      \"tariff_id\": 1,\n      \"gauge_id\": 1001,\n      \"day_kw\": 4883,\n      \"night_kw\": 1491\n    }\n  ],\n  \"count\": 31\n}"
+        },
+        {
+          "name": "404 Not Found",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base_url}}/realty/{{realty_id}}/readings?date_from=2026-10-01&date_to=2026-10-31"
+          },
+          "status": "Not Found",
+          "code": 404,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"message\": \"Not found\"\n}"
+        },
+        {
+          "name": "400 Bad Request",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base_url}}/realty/{{realty_id}}/readings?date_from=2026-10-01&date_to=2026-10-31"
+          },
+          "status": "Bad Request",
+          "code": 400,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"message\": \"invalid \\\"date_from\\\" parameter\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "Счета объекта",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{base_url}}/realty/{{realty_id}}/invoices?limit=10&offset=0"
+      },
+      "response": [
+        {
+          "name": "200 OK",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base_url}}/realty/{{realty_id}}/invoices?limit=10&offset=0"
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"invoices\": [\n    {\n      \"tariff_id\": 1,\n      \"gauge_id\": 1001,\n      \"day_kw\": 298,\n      \"night_kw\": 102,\n      \"price\": 216380,\n      \"deadline\": \"2026-11-10\",\n      \"created_at\": \"2026-10-31 23:00:00\"\n    },\n    {\n      \"tariff_id\": 1,\n      \"gauge_id\": 1001,\n      \"day_kw\": 308,\n      \"night_kw\": 106,\n      \"price\": 223820,\n      \"deadline\": \"2026-10-10\",\n      \"created_at\": \"2026-09-30 23:00:00\"\n    },\n    {\n      \"tariff_id\": 1,\n      \"gauge_id\": 1001,\n      \"day_kw\": 318,\n      \"night_kw\": 90,\n      \"price\": 225060,\n      \"deadline\": \"2026-09-10\",\n      \"created_at\": \"2026-08-31 23:00:00\"\n    },\n    {\n      \"tariff_id\": 1,\n      \"gauge_id\": 1001,\n      \"day_kw\": 306,\n      \"night_kw\": 97,\n      \"price\": 219790,\n      \"deadline\": \"2026-08-10\",\n      \"created_at\": \"2026-07-31 23:00:00\"\n    },\n    {\n      \"tariff_id\": 1,\n      \"gauge_id\": 1001,\n      \"day_kw\": 304,\n      \"night_kw\": 91,\n      \"price\": 216690,\n      \"deadline\": \"2026-07-10\",\n      \"created_at\": \"2026-06-30 23:00:00\"\n    },\n    {\n      \"tariff_id\": 1,\n      \"gauge_id\": 1001,\n      \"day_kw\": 299,\n      \"night_kw\": 77,\n      \"price\": 209250,\n      \"deadline\": \"2026-06-10\",\n      \"created_at\": \"2026-05-31 23:00:00\"\n    },\n    {\n      \"tariff_id\": 1,\n      \"gauge_id\": 1001,\n      \"day_kw\": 308,\n      \"night_kw\": 88,\n      \"price\": 218240,\n      \"deadline\": \"2026-05-10\",\n      \"created_at\": \"2026-04-30 23:00:00\"\n    },\n    {\n      \"tariff_id\": 1,\n      \"gauge_id\": 1001,\n      \"day_kw\": 293,\n      \"night_kw\": 97,\n      \"price\": 211730,\n      \"deadline\": \"2026-04-10\",\n      \"created_at\": \"2026-03-31 23:00:00\"\n    },\n    {\n      \"tariff_id\": 1,\n      \"gauge_id\": 1001,\n      \"day_kw\": 268,\n      \"night_kw\": 76,\n      \"price\": 189720,\n      \"deadline\": \"2026-03-10\",\n      \"created_at\": \"2026-02-28 23:00:00\"\n    },\n    {\n      \"tariff_id\": 1,\n      \"gauge_id\": 1001,\n      \"day_kw\": 325,\n      \"night_kw\": 103,\n      \"price\": 233430,\n      \"deadline\": \"2026-02-10\",\n      \"created_at\": \"2026-01-31 23:00:00\"\n    }\n  ],\n  \"count\": 36\n}"
+        },
+        {
+          "name": "404 Not Found",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base_url}}/realty/{{realty_id}}/invoices?limit=10&offset=0"
+          },
+          "status": "Not Found",
+          "code": 404,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"message\": \"Not found\"\n}"
+        },
+        {
+          "name": "400 Bad Request",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base_url}}/realty/{{realty_id}}/invoices?limit=10&offset=0"
+          },
+          "status": "Bad Request",
+          "code": 400,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"message\": \"invalid \\\"limit\\\" parameter\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "Тариф на дату",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{base_url}}/tariffs?date=2026-10-27"
+      },
+      "response": [
+        {
+          "name": "200 OK",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base_url}}/tariffs?date=2026-10-27"
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"id\": 1,\n  \"name\": \"День–Ночь\",\n  \"price_day_kwph\": 620,\n  \"price_night_kwph\": 310,\n  \"valid_from\": \"2025-11-01 00:00:00\",\n  \"valid_to\": \"2099-01-01 00:00:00\"\n}"
+        },
+        {
+          "name": "404 Not Found",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base_url}}/tariffs?date=2026-10-27"
+          },
+          "status": "Not Found",
+          "code": 404,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"message\": \"Not found\"\n}"
+        },
+        {
+          "name": "400 Bad Request",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base_url}}/tariffs?date=2026-10-27"
+          },
+          "status": "Bad Request",
+          "code": 400,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"message\": \"invalid \\\"date\\\" parameter\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "Установка счётчика",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/realty/{{realty_id}}/gauges",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"gauge_id\": {{new_gauge_id}}\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [
+        {
+          "name": "201 Created",
+          "originalRequest": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/realty/{{realty_id}}/gauges",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"gauge_id\": {{new_gauge_id}}\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Created",
+          "code": 201,
+          "header": [
+            {
+              "key": "Content-Length",
+              "value": "0"
+            }
+          ],
+          "body": ""
+        },
+        {
+          "name": "404 Not Found",
+          "originalRequest": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/realty/{{realty_id}}/gauges",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"gauge_id\": {{new_gauge_id}}\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Not Found",
+          "code": 404,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"message\": \"Not found\"\n}"
+        },
+        {
+          "name": "400 Bad Request",
+          "originalRequest": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/realty/{{realty_id}}/gauges",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"gauge_id\": {{new_gauge_id}}\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Bad Request",
+          "code": 400,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"message\": \"invalid \\\"gauge_id\\\" field\"\n}"
+        }
+      ]
+    }
+  ]
+}
