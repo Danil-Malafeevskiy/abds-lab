@@ -17,6 +17,8 @@ curl http://localhost:8080/ping
 ```
 
 Настройки подключения находятся в [.env.local](.env.local).
+`make run` и `make rund` создают ссылку `.env` на `.env.local`, чтобы команды
+`docker compose` без `--env-file` также получали настройки.
 По умолчанию API работает на порту `8080`, ClickHouse — на `8123` и `9000`,
 пользователь ClickHouse — `default`, пароль пустой.
 

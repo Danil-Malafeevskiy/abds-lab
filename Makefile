@@ -4,10 +4,12 @@
 
 # Runs all services in detached mode.
 run:
+	ln -sfn .env.local .env
 	docker compose --env-file .env.local up -d --build --wait --wait-timeout 120
 
 # Runs all services without detached mode (for debugging).
 rund:
+	ln -sfn .env.local .env
 	docker compose --env-file .env.local up --build
 
 # Shows all service statuses.
